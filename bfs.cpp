@@ -1,11 +1,11 @@
-#include<iostream>
-#include<queue>
-#include<list>
-#include<map>
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <map>
 using namespace std;
 
-void bfs(int start, vector<int> adj[]) {
-    map<int, bool> visited;
+void bfs(int start, const vector<vector<int>>& adj) {
+    map<int, bool> visited; // Using map to keep track of visited nodes
     queue<int> q;
     vector<int> ans;
     
@@ -17,15 +17,16 @@ void bfs(int start, vector<int> adj[]) {
         q.pop();
         ans.push_back(current);  // Add the node to the result
 
-        for (auto it : adj[current]) {
-            if (!visited[it]) {
-                visited[it] = true;
-                q.push(it);
+        for (int neighbor : adj[current]) {
+            // Check if the neighbor has not been visited
+            if (!visited[neighbor]) {
+                visited[neighbor] = true; // Mark it as visited
+                q.push(neighbor);
             }
         }
     }
 
-    for (auto i : ans) {
+    for (int i : ans) {
         cout << i << " ";
     }
     cout << endl;
@@ -38,7 +39,7 @@ int main() {
     cout << "Enter the number of edges (E):" << endl;
     cin >> e;
     
-    vector<int> adj[V];
+    vector<vector<int>> adj(V);
     int u, v;
 
     cout << "Enter the edges (u v):" << endl;
