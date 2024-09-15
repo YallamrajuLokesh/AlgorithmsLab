@@ -3,29 +3,31 @@
 #include <map>
 using namespace std;
 
-void dfsUtil(int Node, vector<int> adj[], map<int, bool>& visited, vector<int>& ls) {
-    visited[Node] = true;
-    ls.push_back(Node);
-    for (auto it : adj[Node]) {
+// Utility function for DFS traversal
+void dfsUtil(int Node, vector<vector<int>>& adj, map<int, bool>& visited, vector<int>& ls) {
+    visited[Node] = true;  // Mark the current node as visited
+    ls.push_back(Node);    // Add the node to the result list
+    for (int it : adj[Node]) {
         if (!visited[it]) {
-            dfsUtil(it, adj, visited, ls);
+            dfsUtil(it, adj, visited, ls);  // Recur for unvisited neighbors
         }
     }
 }
 
-void dfs(int V, vector<int> adj[]) {
+// Function to perform DFS traversal
+void dfs(int V, vector<vector<int>>& adj) {
     int start;
     cout << "Enter the starting vertex: ";
     cin >> start;
 
     map<int, bool> visited;  // Map to store visited status for each node
-    vector<int> ls;  // Vector to store the DFS traversal result
+    vector<int> ls;          // Vector to store the DFS traversal result
 
     dfsUtil(start, adj, visited, ls);  // Start DFS from the given starting node
 
     // Print the DFS traversal result
     cout << "DFS Traversal starting from vertex " << start << ": ";
-    for (auto i : ls) {
+    for (int i : ls) {
         cout << i << " ";
     }
     cout << endl;
@@ -38,7 +40,7 @@ int main() {
     cout << "Enter the number of edges: ";
     cin >> E;
 
-    vector<int> adj[V];  // Create an adjacency list
+    vector<vector<int>> adj(V);  // Create an adjacency list
 
     cout << "Enter the edges (u v) one by one:\n";
     for (int i = 0; i < E; i++) {
